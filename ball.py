@@ -12,8 +12,8 @@ class ball:
     def update(self):
         self.rect.x += self.velocity[0]
         self.rect.y += self.velocity[1]
-    def display(self):
-        screen.blit(self.rect)
+    def draw(self, win):
+        pygame.draw.rect(win, self.colour, self.rect)
     def bounce(self):
         self.velocity[0] = -self.velocity[0]
         self.velocity[1] = random.randint(-8,8)

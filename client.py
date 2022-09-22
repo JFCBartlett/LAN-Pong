@@ -13,10 +13,11 @@ speed = 2
 win = pygame.display.set_mode(size)
 pygame.display.set_caption("Pong")
 
-def redrawWindow(win,player1,player2):
+def redrawWindow(win,player1,player2,ball):
     win.fill(black)
     player1.draw(win)
     player2.draw(win)
+    ball.draw(win)
     pygame.display.update()
 
 def main():
@@ -33,8 +34,9 @@ def main():
                 sys.exit()
 
         #game logic
+        ball = n.getBallp()
         player1.move()
         #drawing
-        redrawWindow(win,player1,player2)
+        redrawWindow(win,player1,player2,ball)
 
 main()

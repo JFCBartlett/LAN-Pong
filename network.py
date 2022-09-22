@@ -12,6 +12,13 @@ class Network:
     def getPlayerp(self):
         return self.p
 
+    def getBallp(self):
+        try:
+            self.client.connect(self.addr)
+            return pickle.loads(self.client.recv(2048))
+        except:
+            pass
+
     def connect(self):
         try:
             self.client.connect(self.addr)

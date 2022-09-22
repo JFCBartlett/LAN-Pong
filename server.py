@@ -19,6 +19,7 @@ s.listen(2)
 print("Waiting for a connection, Server started")
 
 players = [player(30,10,40,160,(255,255,255)), player(930,10,40,160,(255,255,255))]
+ball = ball(500,500,20,20,(255,255,255))
 
 def threaded_client(conn, player):
     conn.send(pickle.dumps(players[player]))
@@ -27,7 +28,6 @@ def threaded_client(conn, player):
         try:
             data = pickle.loads(conn.recv(2048))
             players[player] = data
-
             if not data:
                 print("Disconnected")
                 break
@@ -42,6 +42,7 @@ def threaded_client(conn, player):
                 print("Sending: ", reply)
 
             conn.sendall(pickle.dumps(reply))
+            conn.sendall(pickle.dumps(ball))
 
         except:
             break

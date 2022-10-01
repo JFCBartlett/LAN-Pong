@@ -14,7 +14,6 @@ class Network:
 
     def getBallp(self):
         try:
-            self.client.connect(self.addr)
             return pickle.loads(self.client.recv(2048))
         except:
             pass

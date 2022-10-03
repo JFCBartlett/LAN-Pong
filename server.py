@@ -18,7 +18,7 @@ s.listen(2)
 print("Waiting for a connection, Server started")
 
 players = [player(30, 10, 40, 160, (255, 255, 255)), player(930, 10, 40, 160, (255, 255, 255))]
-ball = ball(500, 500, 20, 20, (255, 255, 255))
+ball = ball(500, 300, 20, 20, (255, 255, 255))
 
 
 def threaded_client(conn, player):
@@ -34,12 +34,13 @@ def threaded_client(conn, player):
             else:
                 if player == 1:
                     reply = players[0]
+                    ball.update()
+                    print(ball)
 
 
                 else:
                     reply = players[1]
-                    ball.update()
-                    print(ball)
+
 
                 print("Received: ", data)
                 print("Sending: ", reply)

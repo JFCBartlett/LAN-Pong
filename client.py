@@ -23,12 +23,11 @@ def redrawWindow(win,player1,player2,ball):
 def main():
     n = Network()
     player1 = n.getPlayerp()
-
     clock = pygame.time.Clock()
     while True:
         clock.tick(60)
-        player2 = n.send(player1)
-        for event in pygame.event.get(): 
+        player2 = n.sendPlayer(player1)
+        for event in pygame.event.get():
              if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()

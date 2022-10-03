@@ -25,7 +25,7 @@ class Network:
         except:
             pass
 
-    def send(self, data):
+    def sendPlayer(self, data):
         try:
             self.client.send(pickle.dumps(data))
             return pickle.loads(self.client.recv(2048))

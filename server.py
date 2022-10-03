@@ -1,5 +1,4 @@
 import socket
-import random
 from _thread import *
 from player import player
 from ball import ball
@@ -18,8 +17,9 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for a connection, Server started")
 
-players = [player(30,10,40,160,(255,255,255)), player(930,10,40,160,(255,255,255))]
-ball = ball(500,500,20,20,(255,255,255))
+players = [player(30, 10, 40, 160, (255, 255, 255)), player(930, 10, 40, 160, (255, 255, 255))]
+ball = ball(500, 500, 20, 20, (255, 255, 255))
+
 
 def threaded_client(conn, player):
     conn.send(pickle.dumps(players[player]))
@@ -32,11 +32,14 @@ def threaded_client(conn, player):
                 print("Disconnected")
                 break
             else:
-                if player ==1:
+                if player == 1:
                     reply = players[0]
+
 
                 else:
                     reply = players[1]
+                    ball.update()
+                    print(ball)
 
                 print("Received: ", data)
                 print("Sending: ", reply)
@@ -49,6 +52,7 @@ def threaded_client(conn, player):
     print("Lost connection")
     conn.close()
 
+
 currentPlayer = 0
 
 while True:
@@ -56,5 +60,3 @@ while True:
     print("Connected to:", addr)
     start_new_thread(threaded_client, (conn, currentPlayer))
     currentPlayer += 1
-
-

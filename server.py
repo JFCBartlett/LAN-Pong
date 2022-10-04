@@ -4,6 +4,7 @@ from player import player
 from ball import ball
 import pickle
 
+
 server = socket.gethostbyname(socket.gethostname())
 port = 5555
 
@@ -21,37 +22,33 @@ players = [player(30, 10, 40, 160, (255, 255, 255)), player(930, 10, 40, 160, (2
 ball = ball(500, 300, 20, 20, (255, 255, 255))
 
 
-def threaded_client(conn, player):
-    conn.send(pickle.dumps(players[player]))
-    reply = " "
+def threaded_client(connection, currentplayer):
+    connection.send(pickle.dumps(players[currentplayer]))
+    connection.sendall(pickle.dumps(ball))
     while True:
         try:
-            data = pickle.loads(conn.recv(2048))
-            players[player] = data
+            data = pickle.loads(connection.recv(2048))
+            players[currentplayer] = data
             if not data:
                 print("Disconnected")
                 break
             else:
-                if player == 1:
+                if currentplayer == 1:
                     reply = players[0]
                     ball.update()
-                    print(ball)
-
-
                 else:
                     reply = players[1]
-
 
                 print("Received: ", data)
                 print("Sending: ", reply)
 
-            conn.sendall(pickle.dumps(reply))
-            conn.sendall(pickle.dumps(ball))
+            connection.sendall(pickle.dumps(reply))
+            connection.sendall(pickle.dumps(ball))
 
-        except:
+        except pickle.PickleError:
             break
     print("Lost connection")
-    conn.close()
+    connection.close()
 
 
 currentPlayer = 0

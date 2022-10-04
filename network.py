@@ -1,6 +1,7 @@
 import socket
 import pickle
 
+
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -15,14 +16,14 @@ class Network:
     def getBallp(self):
         try:
             return pickle.loads(self.client.recv(2048))
-        except:
+        except pickle.PickleError:
             pass
 
     def connect(self):
         try:
             self.client.connect(self.addr)
             return pickle.loads(self.client.recv(2048))
-        except:
+        except pickle.PickleError:
             pass
 
     def sendPlayer(self, data):
